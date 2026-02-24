@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Publications — Khoa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F5F4EF; --surface: #ECEAE2; --ink: #1A1A18;
+      --ink-muted: #6B6B62; --accent: #2D5A3D; --accent-light: #E8F0EB;
+      --rule: #C8C5BA;
+      --mono: 'DM Mono', monospace; --serif: 'Instrument Serif', serif; --sans: 'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 4rem; background: var(--bg); border-bottom: 1px solid var(--rule);
+    }
+    .nav-logo { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+    .nav-back { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+
+    /* PROJECT HERO */
+    .project-hero {
+      padding: 10rem 4rem 5rem;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 4rem;
+      align-items: end;
+    }
+    .project-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .project-hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.75rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+    .project-hero-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .meta-item {}
+    .meta-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 0.2rem;
+    }
+    .meta-value {
+      font-size: 0.9rem;
+      color: var(--ink);
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.2rem 0.5rem; border: 1px solid var(--rule); color: var(--ink-muted);
+    }
+
+    /* BODY */
+    .project-body { max-width: 1100px; margin: 0 auto; }
+
+    .project-section {
+      padding: 4rem;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 14rem 1fr;
+      gap: 4rem;
+    }
+    .ps-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      padding-top: 0.2rem;
+    }
+    .ps-content {}
+    .ps-content p {
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      max-width: 58ch;
+    }
+    .ps-content p:last-child { margin-bottom: 0; }
+
+    /* RATIONALE LIST */
+    .rationale-list { display: flex; flex-direction: column; gap: 0; }
+    .rationale-item {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--rule);
+    }
+    .rationale-item:last-child { border-bottom: 1px solid var(--rule); }
+    .rationale-num {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      min-width: 1.5rem;
+      margin-top: 0.15rem;
+    }
+    .rationale-item p { font-size: 0.9rem; color: var(--ink-muted); }
+
+    /* IMAGE PLACEHOLDER */
+    .img-placeholder {
+      background: var(--surface); border: 1px dashed var(--rule);
+      height: 260px; display: flex; align-items: center; justify-content: center;
+      margin: 1.5rem 0;
+    }
+    .img-placeholder span {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
+      color: var(--ink-muted); text-transform: uppercase;
+    }
+
+    /* RESULTS BLOCK */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-bottom: 1.5rem;
+    }
+    .result-stat {
+      background: var(--bg);
+      padding: 1.5rem;
+    }
+    .result-num {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .result-desc {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+    }
+
+    .insight-box {
+      background: var(--surface);
+      border-left: 2px solid var(--accent);
+      padding: 1.25rem 1.5rem;
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      max-width: 55ch;
+    }
+    .insight-box strong {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    /* FOOTER */
+    .project-nav-footer {
+      padding: 2.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--rule);
+    }
+    .pnf-link {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .pnf-link:hover { color: var(--accent); }
+    footer { padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; color: var(--ink-muted); }
+    .back-top { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+    .back-top:hover { color: var(--accent); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 2rem; }
+      .project-hero { padding: 8rem 2rem 3rem; grid-template-columns: 1fr; }
+      .project-section { padding: 3rem 2rem; grid-template-columns: 1fr; gap: 1rem; }
+      .results-grid { grid-template-columns: 1fr; }
+      .project-nav-footer { padding: 2rem; }
+      footer { padding: 1.5rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Khoa — Portfolio</a>
+    <a href="index.html#projects" class="nav-back">← Back to Work</a>
+  </nav>
+
+  <!-- HERO -->
+  <header class="project-hero">
+    <div>
+      <p class="project-eyebrow">Marketing Intern · Melbourne Law School</p>
+      <h1>Student Publications —<br>Reaching North America</h1>
+    </div>
+    <div class="project-hero-meta">
+      <div class="meta-item">
+        <p class="meta-label">Role</p>
+        <p class="meta-value">Marketing Intern</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-label">Duration</p>
+        <p class="meta-value">Oct – Nov 2025</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-label">Skills</p>
+        <div class="tags">
+          <span class="tag">Campaign Strategy</span>
+          <span class="tag">Media Buying</span>
+          <span class="tag">UTM Tracking</span>
+          <span class="tag">AB Testing</span>
+          <span class="tag">Copywriting</span>
+          <span class="tag">Budget Management</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="project-body">
+
+    <!-- OVERVIEW -->
+    <div class="project-section">
+      <span class="ps-label">Overview</span>
+      <div class="ps-content">
+        <p>Nearing the end of 2025, stakeholders from the Faculty of Law expressed interest in expanding the faculty's presence in North America for their flagship post-graduate courses. With a limited end-of-year budget, I proposed a small-scale online marketing campaign as an experiment to test the viability of using student publications as a targeted channel overseas.</p>
+        <div class="img-placeholder"><span>Screenshot — Banner example on student publication site</span></div>
+      </div>
+    </div>
+
+    <!-- RATIONALE -->
+    <div class="project-section">
+      <span class="ps-label">Rationale</span>
+      <div class="ps-content">
+        <div class="rationale-list">
+          <div class="rationale-item">
+            <span class="rationale-num">01</span>
+            <p>Student publications primarily serve only one demographic: university students — the exact target audience for post-graduate course offerings.</p>
+          </div>
+          <div class="rationale-item">
+            <span class="rationale-num">02</span>
+            <p>Publications are usually university-specific, allowing for targeting of high-intent geographical areas and optimisation of creative messaging.</p>
+          </div>
+          <div class="rationale-item">
+            <span class="rationale-num">03</span>
+            <p>Online delivery through both websites and newsletters allows for flexible scheduling, budget-specific campaigns, and the ability to conduct AB testing — ideal for an experimental campaign with a smaller budget.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESEARCH -->
+    <div class="project-section">
+      <span class="ps-label">Research</span>
+      <div class="ps-content">
+        <p>I coordinated the campaign from ideation through to execution and metrics collection. Using admissions data collected by the university, I identified and synthesised a list of North American colleges with the highest admission rates — indicative of pre-existing student interest.</p>
+        <p>After inquiring about advertising rates from all potential publications, I cross-referenced pricing and potential reach to select the final candidates. From this, I presented a detailed proposal to faculty stakeholders, outlining preferred candidates and possible messaging and copy examples.</p>
+      </div>
+    </div>
+
+    <!-- EXECUTION -->
+    <div class="project-section">
+      <span class="ps-label">Execution</span>
+      <div class="ps-content">
+        <p>I negotiated rates with the publications' advertising teams to outline a marketing plan, splitting the budget 70/30 between web banners and newsletters. Leveraging a pre-existing cross-university partnership program, I chose a relevant landing page, synthesised custom UTMs, and wrote copy for the creatives.</p>
+        <p>Finally, I liaised with the internal design team to produce two simple creatives to be utilised for both the website and newsletters, before sending them off to the publications team.</p>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="project-section">
+      <span class="ps-label">Results</span>
+      <div class="ps-content">
+        <div class="results-grid">
+          <div class="result-stat">
+            <p class="result-num">65k+</p>
+            <p class="result-desc">Total impressions over 2 weeks</p>
+          </div>
+          <div class="result-stat">
+            <p class="result-num">36×</p>
+            <p class="result-desc">Higher CTR for newsletters vs web banners</p>
+          </div>
+          <div class="result-stat">
+            <p class="result-num">8×</p>
+            <p class="result-desc">Lower CPC for newsletter placements</p>
+          </div>
+        </div>
+        <div class="insight-box">
+          <strong>Key Insight</strong>
+          Between 3 consecutive newsletters, clicks decreased significantly on the second and third deliveries — indicating audience saturation due to close scheduling proximity. This finding directly informs spacing strategy for future sends.
+        </div>
+        <p style="margin-top:1.25rem; font-size:0.9rem; color:var(--ink-muted);">Overall, the experimental campaign achieved its goal of generating reach in a new market measured by impressions, while yielding valuable insights for potential future campaigns.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PROJECT NAV -->
+  <div class="project-nav-footer">
+    <a href="index.html#projects" class="pnf-link">← All Projects</a>
+    <a href="project-collateral.html" class="pnf-link">Next: Collateral Refresh →</a>
+  </div>
+
+  <footer>
+    <p>Khoa &mdash; Marketing Portfolio &mdash; 2026</p>
+    <a href="#" class="back-top">↑ Back to top</a>
+  </footer>
+
+</body>
+</html>

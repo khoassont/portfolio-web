@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khoa — Marketing Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F5F4EF; --surface: #ECEAE2; --ink: #1A1A18;
+      --ink-muted: #6B6B62; --accent: #2D5A3D; --accent-light: #E8F0EB;
+      --rule: #C8C5BA;
+      --mono: 'DM Mono', monospace; --serif: 'Instrument Serif', serif; --sans: 'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 4rem; background: var(--bg); border-bottom: 1px solid var(--rule);
+    }
+    .nav-logo { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: flex-end; padding: 0 4rem 5rem;
+      border-bottom: 1px solid var(--rule); position: relative;
+    }
+    .hero-label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1.5rem; }
+    .hero-label span { display: inline-block; width: 2rem; height: 1px; background: var(--ink-muted); vertical-align: middle; margin-right: 0.75rem; }
+    .hero h1 { font-family: var(--serif); font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.01em; max-width: 18ch; }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub { margin-top: 2rem; font-size: 1rem; color: var(--ink-muted); max-width: 48ch; line-height: 1.65; }
+    .hero-meta { position: absolute; right: 4rem; bottom: 5rem; text-align: right; }
+    .hero-meta p { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; color: var(--ink-muted); line-height: 2; }
+
+    /* SECTION */
+    .section { padding: 6rem 4rem; border-bottom: 1px solid var(--rule); }
+    .section-header { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 4rem; }
+    .section-index { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; color: var(--ink-muted); }
+    .section-title { font-family: var(--serif); font-size: 2rem; font-weight: 400; }
+
+    /* PROJECT LIST */
+    .projects-list { display: flex; flex-direction: column; }
+
+    .project-row {
+      display: grid;
+      grid-template-columns: 5rem 1fr auto;
+      align-items: center;
+      gap: 3rem;
+      padding: 2.25rem 0;
+      border-top: 1px solid var(--rule);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.25s, padding 0.25s;
+      position: relative;
+    }
+    .project-row:last-child { border-bottom: 1px solid var(--rule); }
+    .project-row:hover {
+      background: var(--accent-light);
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      margin: 0 -1.5rem;
+    }
+    .project-row:hover .arrow { opacity: 1; transform: translateX(0); }
+
+    .row-num {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    .row-body {}
+    .row-team {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+    .row-title {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
+    }
+    .row-blurb {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      max-width: 55ch;
+    }
+
+    .row-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.75rem;
+    }
+    .row-date {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--ink-muted);
+      white-space: nowrap;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; justify-content: flex-end; }
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid var(--rule);
+      color: var(--ink-muted);
+    }
+    .arrow {
+      font-size: 0.85rem;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    /* ORGANIC SOCIAL */
+    .social-intro { font-size: 0.95rem; color: var(--ink-muted); max-width: 60ch; margin-bottom: 3.5rem; line-height: 1.65; }
+
+    .embed-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .embed-item {}
+    .embed-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .ig-thumb {
+      display: block;
+      position: relative;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      background: var(--surface);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .ig-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+    .ig-thumb:hover img {
+      transform: scale(1.04);
+      filter: brightness(0.72);
+    }
+    .ig-thumb-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .ig-thumb:hover .ig-thumb-overlay { opacity: 1; }
+    .ig-thumb-overlay svg {
+      width: 2rem;
+      height: 2rem;
+      fill: white;
+    }
+    .ig-thumb-overlay span {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: white;
+    }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 6rem; }
+    .about-portrait {
+      background: var(--surface); border: 1px dashed var(--rule);
+      aspect-ratio: 3/4; display: flex; align-items: flex-end; justify-content: center; padding: 1rem;
+    }
+    .about-portrait span { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--ink-muted); text-transform: uppercase; }
+    .about-text h2 { font-family: var(--serif); font-size: 2.25rem; font-weight: 400; line-height: 1.2; margin-bottom: 1.5rem; }
+    .about-text h2 em { font-style: italic; color: var(--accent); }
+    .about-text p { font-size: 0.95rem; color: var(--ink-muted); max-width: 55ch; margin-bottom: 1rem; }
+    .credentials { margin-top: 2rem; display: flex; flex-direction: column; }
+    .credential { display: flex; gap: 2rem; padding: 0.75rem 0; border-top: 1px solid var(--rule); font-size: 0.85rem; }
+    .credential:last-child { border-bottom: 1px solid var(--rule); }
+    .credential-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); min-width: 7rem; margin-top: 0.15rem; }
+
+    /* FOOTER */
+    footer { padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; color: var(--ink-muted); }
+    .back-top { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+    .back-top:hover { color: var(--accent); }
+
+    /* ANIMATIONS */
+    .fade-in { opacity: 0; transform: translateY(16px); animation: fadeUp 0.8s forwards; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .hero h1 { animation-delay: 0.1s; }
+    .hero-sub { animation-delay: 0.25s; }
+    .hero-meta { animation-delay: 0.4s; }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 2rem; }
+      .hero { padding: 0 2rem 4rem; }
+      .hero-meta { display: none; }
+      .section { padding: 4rem 2rem; }
+      .project-row { grid-template-columns: 1fr; gap: 0.75rem; }
+      .row-right { align-items: flex-start; text-align: left; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .about-portrait { aspect-ratio: 1/1; }
+      .embed-grid { grid-template-columns: 1fr; }
+      footer { padding: 1.5rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Khoa — Portfolio</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#social">Content</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-label fade-in"><span></span>Marketing · Science · Communication</p>
+    <h1 class="fade-in">Hi, I'm Khoa<br><em>(like the croi<br>in croissant)</em></h1>
+    <p class="hero-sub fade-in">A marketing freelancer and science graduate who believes complex things don't always need to be visually unbearable.</p>
+    <div class="hero-meta fade-in">
+      <p>University of Melbourne</p>
+      <p>Master of Biotechnology</p>
+      <p>Marketing · Content · Analytics</p>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="section-header">
+      <span class="section-index">01 /</span>
+      <h2 class="section-title">Selected Work</h2>
+    </div>
+
+    <div class="projects-list">
+
+      <a href="project-north-america.html" class="project-row">
+        <span class="row-num">01</span>
+        <div class="row-body">
+          <p class="row-team">Marketing Intern · Melbourne Law School</p>
+          <h3 class="row-title">Student Publications — Reaching North America</h3>
+          <p class="row-blurb">A small-scale experimental campaign using student publications to test North American market viability for post-graduate offerings.</p>
+        </div>
+        <div class="row-right">
+          <span class="row-date">Oct – Nov 2025</span>
+          <div class="tags">
+            <span class="tag">Campaign Strategy</span>
+            <span class="tag">Media Buying</span>
+            <span class="tag">Copywriting</span>
+          </div>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a href="project-collateral.html" class="project-row">
+        <span class="row-num">02</span>
+        <div class="row-body">
+          <p class="row-team">Marketing Intern · Faculty of Business & Economics</p>
+          <h3 class="row-title">Collateral Asset Refresh for 2026 Curriculum Change</h3>
+          <p class="row-blurb">Coordinating an urgent multi-asset update — brochure, posters, web pages — before the university's largest recruitment event.</p>
+        </div>
+        <div class="row-right">
+          <span class="row-date">Jul – Aug 2025</span>
+          <div class="tags">
+            <span class="tag">Project Coordination</span>
+            <span class="tag">Stakeholder Mgmt</span>
+            <span class="tag">Editorial</span>
+          </div>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a href="project-ai-search.html" class="project-row">
+        <span class="row-num">03</span>
+        <div class="row-body">
+          <p class="row-team">Marketing Intern · Faculty of Business & Economics</p>
+          <h3 class="row-title">Artificial or Intelligent: Where is Search Going Next?</h3>
+          <p class="row-blurb">An internal knowledge-sharing presentation on the impact of GenAI on search behaviour and what it means for marketing strategy.</p>
+        </div>
+        <div class="row-right">
+          <span class="row-date">November 2025</span>
+          <div class="tags">
+            <span class="tag">GenAI</span>
+            <span class="tag">SEM</span>
+            <span class="tag">Data Analysis</span>
+          </div>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ORGANIC SOCIAL -->
+  <section class="section" id="social">
+    <div class="section-header">
+      <span class="section-index">02 /</span>
+      <h2 class="section-title">Organic Social Media</h2>
+    </div>
+
+    <p class="social-intro">
+      Original short-form video and photography that builds community and drives organic reach — without the ad spend. Produced for university Instagram and LinkedIn channels.
+    </p>
+
+    <div class="embed-grid">
+
+      <div class="embed-item">
+        <p class="embed-label">Photography &middot; Instagram</p>
+        <a class="ig-thumb" href="https://www.instagram.com/p/DRB_RmiFzry/" target="_blank" rel="noopener">
+          <img src="images/thumb-1.jpg" alt="Instagram photography post" />
+          <div class="ig-thumb-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <span>View on Instagram</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="embed-item">
+        <p class="embed-label">Photography &middot; Instagram</p>
+        <a class="ig-thumb" href="https://www.instagram.com/p/DNpsf4Ns6HC/" target="_blank" rel="noopener">
+          <img src="images/thumb-2.jpg" alt="Instagram photography post" />
+          <div class="ig-thumb-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <span>View on Instagram</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="embed-item">
+        <p class="embed-label">Reel &middot; Instagram</p>
+        <a class="ig-thumb" href="https://www.instagram.com/reel/DQBqmQqiWxy/" target="_blank" rel="noopener">
+          <img src="images/thumb-3.jpg" alt="Instagram Reel" />
+          <div class="ig-thumb-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <span>View on Instagram</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="embed-item">
+        <p class="embed-label">Reel &middot; Instagram</p>
+        <a class="ig-thumb" href="https://www.instagram.com/reel/DPBWZv0knRU/" target="_blank" rel="noopener">
+          <img src="images/thumb-4.jpg" alt="Instagram Reel" />
+          <div class="ig-thumb-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <span>View on Instagram</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="embed-item">
+        <p class="embed-label">Reel &middot; Instagram</p>
+        <a class="ig-thumb" href="https://www.instagram.com/reel/DOvHEUUCBFB/" target="_blank" rel="noopener">
+          <img src="images/thumb-5.jpg" alt="Instagram Reel" />
+          <div class="ig-thumb-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <span>View on Instagram</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="embed-item">
+        <p class="embed-label">Photography &middot; LinkedIn</p>
+        <a class="ig-thumb" href="https://www.linkedin.com/posts/business-and-economics-unimelb_the-spot-like-youve-never-seen-it-before-activity-7367013147871703040-6V5Y" target="_blank" rel="noopener">
+          <img src="images/thumb-linkedin.jpg" alt="LinkedIn photography post" />
+          <div class="ig-thumb-overlay">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <span>View on LinkedIn</span>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="section-header">
+      <span class="section-index">03 /</span>
+      <h2 class="section-title">About</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-portrait"><span>Portrait</span></div>
+      <div class="about-text">
+        <h2>Science-trained.<br><em>Creatively driven.</em></h2>
+        <p>My name is Khoa, and I'm a part-time freelance social media content creator, photographer, marketer and science student. After graduating with a Bachelor of Biomedicine (Immunology), I'm currently finishing a Master of Biotechnology at the University of Melbourne while actively pursuing opportunities in marketing, communications and photography.</p>
+        <p>Sitting at the intersection between creative visual storytelling and a burning passion for science, I found myself thriving at analytics-driven marketing, content optimisation and bridging the gap between complex topics and effective communication.</p>
+        <p>My biggest dream is to facilitate science adaptation and education through well thought-out messaging, visually engaging content and memorable ideas.</p>
+        <div class="credentials">
+          <div class="credential">
+            <span class="credential-label">Degree</span>
+            <span>B. Biomedicine (Immunology) — University of Melbourne</span>
+          </div>
+          <div class="credential">
+            <span class="credential-label">Current</span>
+            <span>M. Biotechnology — University of Melbourne</span>
+          </div>
+          <div class="credential">
+            <span class="credential-label">Focus areas</span>
+            <span>Marketing · Photography · Science Communication</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Khoa &mdash; Marketing Portfolio &mdash; 2026</p>
+    <a href="#" class="back-top">↑ Back to top</a>
+  </footer>
+
+
+</body>
+</html>

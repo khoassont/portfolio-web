@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artificial or Intelligent — Khoa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F5F4EF; --surface: #ECEAE2; --ink: #1A1A18;
+      --ink-muted: #6B6B62; --accent: #2D5A3D; --accent-light: #E8F0EB;
+      --rule: #C8C5BA;
+      --mono: 'DM Mono', monospace; --serif: 'Instrument Serif', serif; --sans: 'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 4rem; background: var(--bg); border-bottom: 1px solid var(--rule);
+    }
+    .nav-logo { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+    .nav-back { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+
+    .project-hero {
+      padding: 10rem 4rem 5rem;
+      border-bottom: 1px solid var(--rule);
+      display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; align-items: end;
+    }
+    .project-eyebrow { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .project-hero h1 { font-family: var(--serif); font-size: clamp(2rem, 5vw, 3.75rem); font-weight: 400; line-height: 1.1; letter-spacing: -0.01em; }
+    .project-hero h1 em { font-style: italic; color: var(--accent); }
+    .project-hero-meta { display: flex; flex-direction: column; gap: 1.25rem; }
+    .meta-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.2rem; }
+    .meta-value { font-size: 0.9rem; color: var(--ink); }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.2rem 0.5rem; border: 1px solid var(--rule); color: var(--ink-muted); }
+
+    .project-section {
+      padding: 4rem;
+      border-bottom: 1px solid var(--rule);
+      display: grid; grid-template-columns: 14rem 1fr; gap: 4rem;
+    }
+    .ps-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); padding-top: 0.2rem; }
+    .ps-content p { font-size: 0.95rem; color: var(--ink-muted); margin-bottom: 1rem; max-width: 58ch; }
+    .ps-content p:last-child { margin-bottom: 0; }
+
+    .img-placeholder {
+      background: var(--surface); border: 1px dashed var(--rule);
+      height: 260px; display: flex; align-items: center; justify-content: center; margin: 1.5rem 0;
+    }
+    .img-placeholder.half { height: 200px; }
+    .img-placeholder span { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--ink-muted); text-transform: uppercase; }
+
+    /* AGENDA LIST */
+    .agenda-list { display: flex; flex-direction: column; }
+    .agenda-item {
+      display: flex; align-items: baseline; gap: 1.5rem;
+      padding: 1rem 0; border-top: 1px solid var(--rule);
+    }
+    .agenda-item:last-child { border-bottom: 1px solid var(--rule); }
+    .agenda-num { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--accent); min-width: 1.5rem; }
+    .agenda-item p { font-size: 0.9rem; color: var(--ink-muted); }
+
+    /* SOURCES GRID */
+    .sources-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-bottom: 1.25rem; }
+    .source-cell { background: var(--bg); padding: 1.25rem; }
+    .source-type { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.35rem; }
+    .source-desc { font-size: 0.85rem; color: var(--ink-muted); }
+
+    /* SLIDES GRID */
+    .slides-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .insight-box {
+      background: var(--accent-light); border-left: 2px solid var(--accent);
+      padding: 1.25rem 1.5rem; font-size: 0.9rem; color: var(--ink);
+      max-width: 55ch; margin-top: 1rem;
+    }
+    .insight-box strong {
+      display: block; font-family: var(--mono); font-size: 0.58rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem;
+    }
+
+    .cta-link {
+      display: inline-block;
+      margin-top: 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 0.15rem;
+      transition: opacity 0.2s;
+    }
+    .cta-link:hover { opacity: 0.6; }
+
+    .project-nav-footer { padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--rule); }
+    .pnf-link { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+    .pnf-link:hover { color: var(--accent); }
+
+    footer { padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; color: var(--ink-muted); }
+    .back-top { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+    .back-top:hover { color: var(--accent); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 2rem; }
+      .project-hero { padding: 8rem 2rem 3rem; grid-template-columns: 1fr; }
+      .project-section { padding: 3rem 2rem; grid-template-columns: 1fr; gap: 1rem; }
+      .sources-grid { grid-template-columns: 1fr; }
+      .slides-grid { grid-template-columns: 1fr; }
+      .project-nav-footer { padding: 2rem; }
+      footer { padding: 1.5rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Khoa — Portfolio</a>
+    <a href="index.html#projects" class="nav-back">← Back to Work</a>
+  </nav>
+
+  <header class="project-hero">
+    <div>
+      <p class="project-eyebrow">Marketing Intern · Faculty of Business & Economics</p>
+      <h1>Artificial or Intelligent:<br><em>Where is Search Going Next?</em></h1>
+    </div>
+    <div class="project-hero-meta">
+      <div class="meta-item">
+        <p class="meta-label">Format</p>
+        <p class="meta-value">Internal Knowledge-Sharing Presentation</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-label">Duration</p>
+        <p class="meta-value">November 2025</p>
+      </div>
+      <div class="meta-item">
+        <p class="meta-label">Skills</p>
+        <div class="tags">
+          <span class="tag">GenAI</span>
+          <span class="tag">SEM</span>
+          <span class="tag">Data Analysis</span>
+          <span class="tag">Research Synthesis</span>
+          <span class="tag">Presentation</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="project-body">
+
+    <!-- OVERVIEW -->
+    <div class="project-section">
+      <span class="ps-label">Overview</span>
+      <div class="ps-content">
+        <p>At an internal knowledge-sharing session within the Faculty of Business and Economics, I presented data-informed insights regarding the effects of Generative AI on user behaviour and search engine marketing.</p>
+        <div class="img-placeholder"><span>Screenshot — Opening slide</span></div>
+      </div>
+    </div>
+
+    <!-- GOAL -->
+    <div class="project-section">
+      <span class="ps-label">Goal</span>
+      <div class="ps-content">
+        <div class="insight-box">
+          <strong>Objective</strong>
+          To garner internal interest and attention towards the topic of GenAI search, and underscore the need for strategic adaptation of current marketing activities and department-wide communication during a period of significant industry-wide landscape shift.
+        </div>
+      </div>
+    </div>
+
+    <!-- SOURCES -->
+    <div class="project-section">
+      <span class="ps-label">Data Sources</span>
+      <div class="ps-content">
+        <p>The presentation was grounded in a combination of first-party and third-party data sources:</p>
+        <div class="sources-grid">
+          <div class="source-cell">
+            <p class="source-type">First-party</p>
+            <p class="source-desc">User behaviour data and metrics from the team's own marketing campaigns</p>
+          </div>
+          <div class="source-cell">
+            <p class="source-type">Platform docs</p>
+            <p class="source-desc">Google's own documentation on AI Overviews and search evolution</p>
+          </div>
+          <div class="source-cell">
+            <p class="source-type">Research</p>
+            <p class="source-desc">Third-party research on changing search patterns and LLM usage trends</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGENDA -->
+    <div class="project-section">
+      <span class="ps-label">Agenda</span>
+      <div class="ps-content">
+        <div class="agenda-list">
+          <div class="agenda-item">
+            <span class="agenda-num">01</span>
+            <p>Brief overview on the current state of online search</p>
+          </div>
+          <div class="agenda-item">
+            <span class="agenda-num">02</span>
+            <p>Recent changes to search engines driven by GenAI</p>
+          </div>
+          <div class="agenda-item">
+            <span class="agenda-num">03</span>
+            <p>Current effects on user behaviour and search patterns</p>
+          </div>
+          <div class="agenda-item">
+            <span class="agenda-num">04</span>
+            <p>Observations on marketing metrics from internal campaigns</p>
+          </div>
+          <div class="agenda-item">
+            <span class="agenda-num">05</span>
+            <p>Beneficial approaches and best practices for adaptation</p>
+          </div>
+        </div>
+        <a href="#" class="cta-link">View full presentation → (insert link)</a>
+      </div>
+    </div>
+
+    <!-- SNAPSHOTS -->
+    <div class="project-section">
+      <span class="ps-label">Snapshots</span>
+      <div class="ps-content">
+        <div class="slides-grid">
+          <div class="img-placeholder half"><span>Screenshot — Slide snapshot 1</span></div>
+          <div class="img-placeholder half"><span>Screenshot — Slide snapshot 2</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="project-nav-footer">
+    <a href="project-collateral.html" class="pnf-link">← Prev: Collateral Refresh</a>
+    <a href="index.html#projects" class="pnf-link">All Projects →</a>
+  </div>
+
+  <footer>
+    <p>Khoa &mdash; Marketing Portfolio &mdash; 2026</p>
+    <a href="#" class="back-top">↑ Back to top</a>
+  </footer>
+
+</body>
+</html>
